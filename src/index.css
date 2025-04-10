@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+:root {
+    --bg-form: #0003;
+    --bag: #f9f9f9
+  }
+
+  .custom-bg {
+    background-color: var(--bg-form); /* Sử dụng biến CSS */
+  }
+  .bg{
+    background-color: var(--bag);
+  }
