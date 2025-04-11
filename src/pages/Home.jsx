@@ -44,10 +44,7 @@ const Home = () => {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-160">
-      {/* Header */}
-      <Header />
-      
+    <>
       {/* Hero Section with Search Form */}
       <HeroSection banner={banner}/>
       
@@ -73,10 +70,7 @@ const Home = () => {
         {/* Changed to 2 columns on larger screens to increase width of items */}
         <ListTicket routes={routes} />
       </div>
-
-      {/* Footer */}
-      <Footer />
-    </div>
+    </>
   );
 }
 
