@@ -174,15 +174,17 @@ export default function DatCho() {
   return (
     <div className="bg-white w-full min-h-screen">
       {/* Header - Tên chuyến tàu ở giữa */}
-      <div className="relative flex justify-end items-center p-3 border-b border-gray-200 bg-gray-50">
-        <div className="absolute left-1/2 transform -translate-x-1/2 text-lg font-bold">
-          Tàu Tốc Hành SE7
-        </div>
-        <div className="text-base font-medium">
-          Ga Nha Trang → Ga Sài Gòn | 11/04/2025
-        </div>
+    <div className="relative flex items-center p-3 border-b border-gray-200 bg-gray-50">
+      {/* Tên chuyến tàu ở giữa */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 text-lg font-bold whitespace-nowrap">
+        Tàu Tốc Hành SE7
       </div>
 
+      {/* Thông tin ga bên phải */}
+      <div className="ml-auto text-base font-medium whitespace-nowrap text-right">
+        Ga Nha Trang → Ga Sài Gòn | 11/04/2025
+      </div>
+    </div>
 
       {/* Main Content - Chia làm 2 cột */}
       <div className="flex flex-col md:flex-row w-full">

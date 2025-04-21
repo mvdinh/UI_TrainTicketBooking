@@ -33,7 +33,7 @@ const HeroSection = ({banner}) => {
             <div className="md:w-3/5 lg:w-1/2">
               <div className="custom-bg rounded-lg shadow-xl p-4" >
                 {/* From & To */}
-                <div className="grid grid-cols-2 gap-3 mb-2">
+                <div className="grid grid-cols-2 gap-2 mb-2">
                   <div className="border border-gray-300 rounded-md p-2 flex items-center bg-white bg-opacity-50 shadow-sm hover:border-gray-400 hover:bg-opacity-60 transition duration-200">
                     <MapPin size={18} className="text-gray-500 mr-2" />
                     <div className="w-full">
@@ -59,37 +59,10 @@ const HeroSection = ({banner}) => {
                 </div>
                 
                 {/* Ticket quantity */}
-                <div className="flex mb-2">
-                  <div className="border border-gray-300 rounded-md p-2 w-full flex items-center bg-white bg-opacity-50 shadow-sm hover:border-gray-400 hover:bg-opacity-60 transition duration-200">
-                    <Users size={18} className="text-gray-500 mr-2" />
-                    <div className="w-full flex items-center justify-between">
-                      <div>
-                        <label className="text-xs text-gray-500 block">Số lượng vé</label>
-                        <span className="font-medium text-sm text-gray-700">{ticketCount} vé</span>
-                      </div>
-                      <div className="flex items-center bg-gray-100 bg-opacity-70 rounded-md">
-                        <button 
-                          onClick={handleTicketDecrement}
-                          className="p-1 rounded-l-md hover:bg-gray-200 transition duration-200"
-                          aria-label="Giảm số lượng vé"
-                        >
-                          <Minus size={16} className="text-gray-600" />
-                        </button>
-                        <span className="mx-2 font-medium text-gray-700">{ticketCount}</span>
-                        <button 
-                          onClick={handleTicketIncrement}
-                          className="p-1 rounded-r-md hover:bg-gray-200 transition duration-200"
-                          aria-label="Tăng số lượng vé"
-                        >
-                          <Plus size={16} className="text-gray-600" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
                 
                 {/* Date and Search Button */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2">
                   <div className="border border-gray-300 rounded-md p-2 flex items-center bg-white bg-opacity-50 shadow-sm hover:border-gray-400 hover:bg-opacity-60 transition duration-200">
                     <Calendar size={18} className="text-gray-500 mr-2" />
                     <div className="w-full">
@@ -100,7 +73,7 @@ const HeroSection = ({banner}) => {
                       />
                     </div>
                   </div>
-                  <button className="bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md font-medium transition duration-200 flex items-center justify-center h-full shadow-md hover:shadow-lg">
+                  <button className="bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md font-medium transition duration-200 flex items-center justify-center cursor-pointer h-full shadow-md hover:shadow-lg">
                     <span className="mr-2">Tìm chuyến tàu</span>
                     <ArrowRight size={16} />
                   </button>
