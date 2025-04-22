@@ -7,8 +7,13 @@ import ThongTinHanhKhach from './DatCho/ThongTinHanhKhach';
 import ChiTietDatCho from './DatCho/ChiTietDatCho';
 import ThanhToan from './DatCho/ThanhToan';
 import TieuDeChuyen from './DatCho/TieuDeChuyen';
+import { setVeTaus } from '../redux/Slices/DatVeSlice';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 
 export default function DatCho() {
+  const navigate = useNavigate();
   const [selectedCabin, setSelectedCabin] = useState('');
   // Thay đổi cấu trúc để lưu ghế theo toa
   const [selectedSeats, setSelectedSeats] = useState([]); // mỗi phần tử: { number, type, cabinId }
@@ -21,7 +26,14 @@ export default function DatCho() {
   const [trainData, setTrainData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const [veTaus, setVeTausData] = useState([]);
 
+  const handleThanhToan = () => {
+    dispatch(setVeTaus(veTaus));
+    // Xử lý tiếp theo như gọi API, chuyển bước...
+    navigate("/payment-inf")
+  };
   // Fetch dữ liệu tàu từ API
   useEffect(() => {
     const fetchTrainData = async () => {
@@ -217,17 +229,43 @@ export default function DatCho() {
               selectedSeats={selectedSeats}
               trainData={trainData}
               basePrice={basePrice}
+              onGenerateVeTaus={setVeTausData} // callback nhận dữ liệu từ con
             />
             
             {/* Thông tin thanh toán */}
-            <ThanhToan
-              totalSelectedSeats={totalSelectedSeats}
-              totalPassengers={totalPassengers}
-              calculateTotal={calculateTotal}
-            />
+            <div className="px-4 py-3 bg-white border border-gray-200 shadow-sm">
+            <div className="flex justify-between items-center text-xs text-gray-600">
+              <span>Tổng số chỗ</span>
+              <span>{totalSelectedSeats}/{totalPassengers} chỗ</span>
+            </div>
+            <div className="flex justify-between items-center mt-2">
+              <span className="text-sm font-bold">Tổng tiền</span>
+              <span className="font-bold text-orange-600 text-lg">
+                {calculateTotal().toLocaleString('vi-VN')}đ
+              </span>
+            </div>
+          </div>
+          
+          <button 
+            onClick={handleThanhToan}
+            className={`w-full py-2 px-4 rounded flex items-center justify-center text-sm mt-3 ${
+              totalSelectedSeats === totalPassengers 
+                ? 'bg-orange-500 hover:bg-orange-600 text-white' 
+                : 'bg-gray-300 text-gray-600'
+            }`}
+            disabled={totalSelectedSeats !== totalPassengers}
+          >
+            <span className="font-medium">Tiếp tục nhập thông tin để thanh toán</span> <ChevronRight size={14} className="ml-2" />
+          </button>
+          
+          {totalSelectedSeats !== totalPassengers && (
+            <div className="text-center text-orange-600 text-xs mt-2">
+              Vui lòng chọn đủ {totalPassengers} chỗ để tiếp tục
+            </div>
+          )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 }

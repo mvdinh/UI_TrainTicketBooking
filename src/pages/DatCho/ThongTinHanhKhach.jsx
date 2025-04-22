@@ -8,6 +8,11 @@ export default function ThongTinHanhKhach({
   setActivePassengerType,
   selectedSeats
 }) {
+  // Đếm số ghế đã chọn cho từng loại hành khách
+  const adultSeatsCount = selectedSeats.filter(seat => seat.type === 'adult').length;
+  const childSeatsCount = selectedSeats.filter(seat => seat.type === 'child').length;
+  const elderlySeatsCount = selectedSeats.filter(seat => seat.type === 'elderly').length;
+
   return (
     <div className="mb-4">
       <div className="text-base font-medium mb-2">Chọn số lượng hành khách:</div>
@@ -42,7 +47,7 @@ export default function ThongTinHanhKhach({
             </div>
           </div>
           <div className="text-xs text-gray-600 mt-1">
-            Đã chọn: {selectedSeats.filter(seat => seat.type === 'adult').length}/{passengers.adults} chỗ
+            Đã chọn: {adultSeatsCount}/{passengers.adults} chỗ
           </div>
         </div>
         
@@ -76,7 +81,7 @@ export default function ThongTinHanhKhach({
             </div>
           </div>
           <div className="text-xs text-gray-600 mt-1">
-            Đã chọn: {selectedSeats.filter(seat => seat.type === 'child').length}/{passengers.children} chỗ
+            Đã chọn: {childSeatsCount}/{passengers.children} chỗ
           </div>
         </div>
         
@@ -110,7 +115,7 @@ export default function ThongTinHanhKhach({
             </div>
           </div>
           <div className="text-xs text-gray-600 mt-1">
-            Đã chọn: {selectedSeats.filter(seat => seat.type === 'elderly').length}/{passengers.elderly} chỗ
+            Đã chọn: {elderlySeatsCount}/{passengers.elderly} chỗ
           </div>
         </div>
       </div>

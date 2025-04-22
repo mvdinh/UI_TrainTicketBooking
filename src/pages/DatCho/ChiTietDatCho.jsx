@@ -1,5 +1,64 @@
-// components/ChiTietDatCho.jsx
-export default function ChiTietDatCho({ selectedSeats, trainData, basePrice }) {
+import React, { useEffect, useCallback } from 'react';
+
+export default function ChiTietDatCho({ selectedSeats, trainData, basePrice, onGenerateVeTaus }) {
+  // Lấy thông tin toa dựa trên mã toa
+  const getCabinName = (cabinId) => {
+    const cabin = trainData?.danhSachToaTau.find(toa => toa.maToa === cabinId);
+    return cabin ? cabin.tenToa : cabinId;
+  };
+
+  // Lấy thông tin giá ghế từ dữ liệu tàu
+  const getSeatData = (cabinId, seatNumber) => {
+    const cabin = trainData?.danhSachToaTau.find(toa => toa.maToa === cabinId);
+    if (!cabin) return null;
+    
+    return cabin.danhSachGhe.find(ghe => ghe.tenGhe === seatNumber);
+  };
+
+  // Chuyển đổi dữ liệu selectedSeats sang định dạng veTaus
+  const convertToVeTaus = useCallback(() => {
+    if (!selectedSeats || selectedSeats.length === 0 || !trainData) return [];
+    
+    return selectedSeats.map(seat => {
+      const seatData = getSeatData(seat.cabinId, seat.number);
+      const price = seatData?.giaTien || basePrice;
+      let finalPrice = price;
+      let maLoaiCho = 1;
+      let tenLoaiCho = 'nguoi lon';
+
+      switch (seat.type) {
+        case 'child':
+          finalPrice = price * 0.7;
+          maLoaiCho = 2;
+          tenLoaiCho = 'trẻ em';
+          break;
+        case 'elderly':
+          finalPrice = price * 0.8;
+          maLoaiCho = 3;
+          tenLoaiCho = 'nguoi cao tuoi';
+          break;
+        default:
+          break;
+      }
+
+      return {
+        maCho: seat.number,
+        tenCho: seat.number,
+        tenToa: getCabinName(seat.cabinId),
+        soTien: finalPrice,
+        maLoaiCho: maLoaiCho,
+        tenLoaiCho: tenLoaiCho
+      };
+    });
+  }, [selectedSeats, trainData, basePrice]);
+
+  useEffect(() => {
+    if (onGenerateVeTaus && selectedSeats.length > 0 && trainData) {
+      const veTausData = convertToVeTaus();
+      onGenerateVeTaus(veTausData);
+    }
+  }, [selectedSeats, trainData, basePrice, onGenerateVeTaus, convertToVeTaus]);
+
   if (!trainData || selectedSeats.length === 0) {
     return (
       <div className="bg-white p-4 border border-gray-200 shadow-sm mb-4">
@@ -8,20 +67,6 @@ export default function ChiTietDatCho({ selectedSeats, trainData, basePrice }) {
       </div>
     );
   }
-
-  // Lấy thông tin toa dựa trên mã toa
-  const getCabinName = (cabinId) => {
-    const cabin = trainData.danhSachToaTau.find(toa => toa.maToa === cabinId);
-    return cabin ? cabin.tenToa : cabinId;
-  };
-
-  // Lấy thông tin giá ghế từ dữ liệu tàu
-  const getSeatData = (cabinId, seatNumber) => {
-    const cabin = trainData.danhSachToaTau.find(toa => toa.maToa === cabinId);
-    if (!cabin) return null;
-    
-    return cabin.danhSachGhe.find(ghe => ghe.tenGhe === seatNumber);
-  };
 
   return (
     <div className="bg-white p-4 border border-gray-200 shadow-sm mb-4">
